@@ -1,0 +1,17 @@
+[user]
+	name = Josef Salyer
+	email = josef.salyer@gmail.com
+[push]
+	default = simple
+[core]
+    excludesfiles = /Users/josefsalyer/.gitignore
+[color]
+	ui = true
+[diff]
+	renames = true
+[gerrit]
+	createchangeid = true
+[alias]
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  ss = status --short
+  pls = push --force-with-lease
