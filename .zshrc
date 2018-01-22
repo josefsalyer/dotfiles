@@ -13,5 +13,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-source $HOME/.exports
 source $HOME/.aliases
+
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
