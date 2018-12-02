@@ -1,17 +1,76 @@
+[url "https://"]
+	insteadOf = git://
+[url "https://github.com"]
+	insteadOf = git://github.com
+[credential]
+	helper = cache
 [user]
 	name = Josef Salyer
 	email = josef.salyer@gmail.com
-[push]
-	default = simple
 [core]
-    excludesfiles = /Users/josefsalyer/.gitignore
+	editor = vim
 [color]
 	ui = true
-[diff]
-	renames = true
-[gerrit]
-	createchangeid = true
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   ss = status --short
+	st = status
   pls = push --force-with-lease
+	co = checkout
+	o = checkout
+	ci = commit
+	c = commit
+	i = commit
+	st = status
+	s = status
+	br = branch
+	b = branch
+	# lg = log --pretty=format:\"%h %ad %s%d [%an]\" --graph --date=short
+	# lg = log --pretty=format:\"%h %ad %s%Cred%d%Creset [%an]\" --graph --date=iso --color=always
+	# lg = log --pretty=format:\"%h %ad %s%d [%an]\" --graph --date=iso
+	# lg = log --pretty=format:\"%h %ad %s%d [%an]\" --graph --date=format-local:'%Y-%m-%d %H:%M:%S'
+	type = cat-file -t
+	dump = cat-file -p
+	df = diff --color
+	dw = diff --color --word-diff
+	dm = difftool -t meld
+	rbc = rebase --continue
+	rba = rebase --abort
+	ffstart = "!f() { git flow feature start $1; }; f"
+	ffstart = "!f() { git flow feature track $1; }; f"
+	ffpub = "!f() { git flow feature publish; }; f"
+
+	# List range of commits in human-readable way
+	devnotes = "!f() { if [ ! -z $1 ] && [ ! -z $2 ]; then git log --date=short --stat --pretty='format:[%ad %C(cyan)%aN%Creset] %s %b' --abbrev-commit $1..$2; else echo 'Invalid from/to'; exit 1; fi; }; f"
+	dn = !git devnotes
+	relnotes = "!f() { if [ ! -z $1 ] && [ ! -z $2 ]; then git log --pretty='format:[%C(cyan)%aN%Creset @ %C(yellow)%h%Creset] %s %b' --abbrev-commit $1..$2 --no-merges; else echo 'Invalid from/to'; exit 1; fi; }; f"
+	rn = !git relnotes
+
+	#Git Flow
+	# "fcb" alias is a shortcut for getting current branch for GitFlow (without prefix)
+	# and is strictly related to [gitflow "prefix"] config section (cuts everything after first "/")
+	fcb = "!f() { git rev-parse --abbrev-ref HEAD | cut -d'/' -f 2-; }; f"
+
+	# Version tags and log commands
+   lv = "!f() { VERSION_PREFIX=$(git config --get gitflow.prefix.versiontag || echo ''); TAGS_LIST=$(git rev-list --tags=$VERSION_PREFIX'[0-9].[0-9]*' --max-count=1 2>&1); S=$?; if [[ $S = 0 ]]; then git describe --tags $TAGS_LIST; else echo 'No version tags found'; exit 1; fi; }; f"
+   av = !git describe --abbrev=0
+   ll = log --pretty=format:%C(yellow)%h\\ %Cblue[%cn]%Cred%d\\ %Creset%s --decorate --numstat
+   ls = log --pretty=format:%C(yellow)%h\\ %Cblue[%cn]%Cred%d\\ %Creset%s --decorate
+   ld = log --pretty=format:%C(yellow)%h\\ %Cblue[%cn,\\ %ad]%Cred%d\\ %Creset%s --decorate --date=short
+   lc = "!f() { if [ ! -z $1 ] && [ ! -z $2 ]; then git ll $1^..$1; else echo 'Invalid from/to'; exit 1; fi; }; f"
+   diffr = "!f() { if [ ! -z $1 ] && [ ! -z $2 ]; then git diff $1^..$1; else echo 'Invalid from/to'; exit 1; fi; }; f"
+   dr = !git diffr
+   f = !git ls-files | grep -i
+   lasttag = describe --tags --abbrev=0
+   lt = !git lasttag
+
+# windows diffing
+# dy = difftool -t meld -y
+# dy = difftool -t \"C:\Program Files (x86)\Meld\Meld.exe\" -y
+# dy = difftool -t "C:\Program Files (x86)\Meld\Meld.exe" -y
+# dy = difftool -t meld.exe
+[svn]
+	rmdir = true
+[rerere]
+	enabled = true
+
