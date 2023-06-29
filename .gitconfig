@@ -64,6 +64,11 @@
    lasttag = describe --tags --abbrev=0
    lt = !git lasttag
 
+   # git rebase flow
+   amn = commit --amend --no-edit
+   amnx = commit --amend --no-edit --no-verify
+   pls = push --force-with-lease
+
 # windows diffing
 # dy = difftool -t meld -y
 # dy = difftool -t \"C:\Program Files (x86)\Meld\Meld.exe\" -y
